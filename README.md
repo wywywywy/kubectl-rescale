@@ -4,7 +4,9 @@ A `kubectl` plugin to scale a deployment or statefulset to 0 then back up to the
 
 ## Install
 
-Coming soon with `krew`
+Download from the [releases page](https://github.com/wywywywy/kubectl-rescale/releases) and put the binary into your path.
+
+Coming soon with [krew](https://krew.sigs.k8s.io/) the kubectl plugin manager.
 
 ## Usage
 
