@@ -1,0 +1,69 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: rescale
+spec:
+  version: {{ .TagName }}
+  homepage: https://github.com/wywywywy/kubectl-rescale
+  platforms:
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: amd64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_darwin_amd64.tar.gz" .TagName }}
+    bin: kubectl-rescale
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: arm64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_darwin_arm64.tar.gz" .TagName }}
+    bin: kubectl-rescale
+  - selector:
+      matchLabels:
+        os: linux
+        arch: amd64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_linux_amd64.tar.gz" .TagName }}
+    bin: kubectl-rescale
+  - selector:
+      matchLabels:
+        os: linux
+        arch: arm64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_linux_arm64.tar.gz" .TagName }}
+    bin: kubectl-rescale
+  - selector:
+      matchLabels:
+        os: windows
+        arch: amd64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_windows_amd64.tar.gz" .TagName }}
+    bin: kubectl-rescale.exe
+  - selector:
+      matchLabels:
+        os: windows
+        arch: arm64
+    {{addURIAndSha "https://github.com/wywywywy/kubectl-rescale/releases/download/{{ .TagName }}/kubectl-rescale_{{ .TagName }}_windows_arm64.tar.gz" .TagName }}
+    bin: kubectl-rescale.exe
+  shortDescription: Scale a deployment or statefulset to 0 then back up to the original desired replica count.
+  description: |
+    A kubectl plugin to scale a deployment or statefulset to 0 then back up to the original desired replica count.
+
+    Usage:
+      kubectl rescale [name of deployment/statefulset] [flags]
+
+    Examples:
+      # scale a deployment to 0 replicas then back up to the original count
+      kubectl rescale deployment/nginx
+
+      # scale a statefulset to 0 replicas then back up to the original count
+      kubectl rescale statefulset/mysql
+
+      # scale a statefulset to 0 replicas then back up to the original count, and wait for a maximum of 600 seconds to do so
+      kubectl rescale statefulset/mysql --max-wait-seconds=600
+
+      # it also supports short names
+      kubectl rescale sts/mysql
+
+      # if the kind is not provided, it will first try to find a deployment with the supplied name, and if not found then statefulset
+      kubectl rescale nginx
+
+      # a namespace can also be supplied
+      kubectl rescale deployment/nginx -n dev
